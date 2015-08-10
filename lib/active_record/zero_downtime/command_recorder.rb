@@ -3,7 +3,7 @@ module ActiveRecord
     module CommandRecorder
       def set_lock_timeout(*args)
         milliseconds = args.first
-        milliseconds ||= 1000
+        milliseconds ||= DEFAULT_TIMEOUT_MILLIS
         record(:set_lock_timeout, milliseconds)
       end
 

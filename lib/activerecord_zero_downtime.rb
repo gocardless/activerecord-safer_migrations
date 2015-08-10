@@ -3,6 +3,8 @@ require 'active_record/zero_downtime/command_recorder'
 
 module ActiveRecord
   module ZeroDowntime
+    DEFAULT_TIMEOUT_MILLIS = 1000
+
     def self.load
       ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
         include ActiveRecord::ZeroDowntime::PostgreSQLAdapter
