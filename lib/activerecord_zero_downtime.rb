@@ -1,17 +1,26 @@
+require 'active_record/connection_adapters/postgresql_adapter'
 require 'active_record/zero_downtime/postgresql_adapter'
-require 'active_record/zero_downtime/command_recorder'
+require 'active_record/zero_downtime/migration'
 
 module ActiveRecord
   module ZeroDowntime
-    DEFAULT_TIMEOUT_MILLIS = 1000
+    @default_lock_timeout = 1000
+
+    def self.default_lock_timeout
+      @default_lock_timeout
+    end
+
+    def self.default_lock_timeout=(timeout_ms)
+      @default_lock_timeout = timeout_ms
+    end
 
     def self.load
       ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
         include ActiveRecord::ZeroDowntime::PostgreSQLAdapter
       end
 
-      ActiveRecord::Migration::CommandRecorder.class_eval do
-        include ActiveRecord::ZeroDowntime::CommandRecorder
+      ActiveRecord::Migration.class_eval do
+        include ActiveRecord::ZeroDowntime::Migration
       end
     end
   end
