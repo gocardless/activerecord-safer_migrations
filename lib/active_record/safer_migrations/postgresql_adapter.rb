@@ -1,5 +1,5 @@
 module ActiveRecord
-  module ZeroDowntime
+  module SaferMigrations
     module PostgreSQLAdapter
       SET_LOCK_TIMEOUT_SQL = <<-SQL
       UPDATE

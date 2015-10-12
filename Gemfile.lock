@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    activerecord_zero_downtime (0.0.1)
+    activerecord-safer_migrations (0.0.1)
       activerecord (~> 4.2.3)
 
 GEM
@@ -48,7 +48,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activerecord_zero_downtime!
+  activerecord-safer_migrations!
   pg (~> 0.18.3)
   rspec (~> 3.3.0)
 

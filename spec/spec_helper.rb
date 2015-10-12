@@ -1,7 +1,7 @@
 require "active_record"
-require "activerecord_zero_downtime"
+require "activerecord-safer_migrations"
 
-ActiveRecord::ZeroDowntime.load
+ActiveRecord::SaferMigrations.load
 ActiveRecord::Base.establish_connection
 
 def silence_stream(stream)

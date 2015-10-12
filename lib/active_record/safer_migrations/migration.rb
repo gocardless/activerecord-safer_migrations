@@ -1,5 +1,5 @@
 module ActiveRecord
-  module ZeroDowntime
+  module SaferMigrations
     module Migration
       def self.included(base)
         base.extend(ClassMethods)
@@ -37,7 +37,7 @@ module ActiveRecord
             original_lock_timeout = conn.get_lock_timeout
 
             if timeout == :default
-              timeout_ms = ZeroDowntime.default_lock_timeout
+              timeout_ms = SaferMigrations.default_lock_timeout
             else
               timeout_ms = timeout
             end

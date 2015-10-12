@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe ActiveRecord::ZeroDowntime::Migration do
+RSpec.describe ActiveRecord::SaferMigrations::Migration do
   before { nuke_migrations }
   before { LockTestHelpers.set_timeout(0) }
 
@@ -38,7 +38,7 @@ RSpec.describe ActiveRecord::ZeroDowntime::Migration do
 
   describe "the default lock timeout" do
     before { $test_result = nil }
-    before { ActiveRecord::ZeroDowntime.default_lock_timeout = 6000 }
+    before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
     let(:migration) do
       Class.new(ActiveRecord::Migration) do
         def change

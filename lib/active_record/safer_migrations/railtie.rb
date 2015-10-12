@@ -1,9 +1,9 @@
 module ActiveRecord
-  module ZeroDowntime
+  module SaferMigrations
     class Railtie < Rails::Railtie
-      initializer 'active_record_zero_downtime.load_adapter' do
+      initializer 'active_record_safer_migrations.load_adapter' do
         ActiveSupport.on_load :active_record do
-          ActiveRecord::ZeroDowntime.load
+          ActiveRecord::SaferMigrations.load
         end
       end
     end

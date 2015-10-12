@@ -1,9 +1,9 @@
 require 'active_record/connection_adapters/postgresql_adapter'
-require 'active_record/zero_downtime/postgresql_adapter'
-require 'active_record/zero_downtime/migration'
+require 'active_record/safer_migrations/postgresql_adapter'
+require 'active_record/safer_migrations/migration'
 
 module ActiveRecord
-  module ZeroDowntime
+  module SaferMigrations
     @default_lock_timeout = 1000
 
     def self.default_lock_timeout
@@ -16,14 +16,14 @@ module ActiveRecord
 
     def self.load
       ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.class_eval do
-        include ActiveRecord::ZeroDowntime::PostgreSQLAdapter
+        include ActiveRecord::SaferMigrations::PostgreSQLAdapter
       end
 
       ActiveRecord::Migration.class_eval do
-        include ActiveRecord::ZeroDowntime::Migration
+        include ActiveRecord::SaferMigrations::Migration
       end
     end
   end
 end
 
-require 'active_record/zero_downtime/railtie' if defined?(::Rails)
+require 'active_record/safer_migrations/railtie' if defined?(::Rails)

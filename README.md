@@ -1,11 +1,11 @@
-## ActiveRecord Zero-Downtime migration helpers
+## ActiveRecord safer migration helpers
 
 Once this gem is loaded, all migrations will have a `lock_timeout` set. The
 default timeout is 1000 ms, but that can be easily changed (e.g. in a Rails
 initializer).
 
 ```ruby
-ActiveRecord::ZeroDowntime.default_lock_timeout = 500
+ActiveRecord::SaferMigrations.default_lock_timeout = 500
 ```
 
 To explicitly set the lock timeout for a given migration, call the
