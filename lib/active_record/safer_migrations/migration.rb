@@ -1,3 +1,5 @@
+require "active_record/safer_migrations/timeout_helper"
+
 module ActiveRecord
   module SaferMigrations
     module Migration
@@ -34,22 +36,14 @@ module ActiveRecord
           # Individual migrations which call `lock_timeout` or `disable_lock_timeout!`
           # will override `exec_migration` with a new timeout in the subclass
           define_method(:exec_migration) do |conn, direction|
-            original_lock_timeout = conn.get_lock_timeout
-
             if timeout == :default
               timeout_ms = SaferMigrations.default_lock_timeout
             else
               timeout_ms = timeout
             end
 
-            say "set_lock_timeout(#{timeout_ms})"
-            conn.set_lock_timeout(timeout_ms)
-
-            begin
+            TimeoutHelper.new(conn, timeout_ms).with_timeout do
               original_exec_migration(conn, direction)
-            ensure
-              say "set_lock_timeout(#{original_lock_timeout})"
-              conn.set_lock_timeout(original_lock_timeout)
             end
           end
         end
