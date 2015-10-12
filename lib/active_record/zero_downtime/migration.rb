@@ -28,6 +28,11 @@ module ActiveRecord
             alias_method :original_exec_migration, :exec_migration
           end
 
+          # Defined once on ActiveRecord::Migration when this module is included
+          # (done by the Railtie) - this provides a default timeout
+          #
+          # Individual migrations which call `lock_timeout` or `disable_lock_timeout!`
+          # will override `exec_migration` with a new timeout in the subclass
           define_method(:exec_migration) do |conn, direction|
             original_lock_timeout = conn.get_lock_timeout
 
