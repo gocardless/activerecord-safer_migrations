@@ -20,20 +20,20 @@ def nuke_migrations
   end
 end
 
-module LockTestHelpers
-  def self.get_timeout
+module TimeoutTestHelpers
+  def self.get(timeout_name)
     sql = <<-SQL
     SELECT
-      setting AS lock_timeout
+      setting AS #{timeout_name}
     FROM
       pg_settings
     WHERE
-      name = 'lock_timeout'
+      name = '#{timeout_name}'
     SQL
-    ActiveRecord::Base.connection.execute(sql).first["lock_timeout"].to_i
+    ActiveRecord::Base.connection.execute(sql).first[timeout_name.to_s].to_i
   end
 
-  def self.set_timeout(timeout)
-    ActiveRecord::Base.connection.execute("SET lock_timeout = #{timeout}")
+  def self.set(timeout_name, timeout)
+    ActiveRecord::Base.connection.execute("SET #{timeout_name} = #{timeout}")
   end
 end

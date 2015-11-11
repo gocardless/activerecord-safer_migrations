@@ -5,6 +5,7 @@ require 'active_record/safer_migrations/migration'
 module ActiveRecord
   module SaferMigrations
     @default_lock_timeout = 1000
+    @default_statement_timeout = 1000
 
     def self.default_lock_timeout
       @default_lock_timeout
@@ -12,6 +13,14 @@ module ActiveRecord
 
     def self.default_lock_timeout=(timeout_ms)
       @default_lock_timeout = timeout_ms
+    end
+
+    def self.default_statement_timeout
+      @default_statement_timeout
+    end
+
+    def self.default_statement_timeout=(timeout_ms)
+      @default_statement_timeout = timeout_ms
     end
 
     def self.load
