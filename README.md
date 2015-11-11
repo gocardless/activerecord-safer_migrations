@@ -36,4 +36,13 @@ class LockTest < ActiveRecord::Migration
 end
 ```
 
+### Use with PgBouncer
+
+This gem sets session-level settings on Postgres connections. If you're using
+PgBouncer in transaction pooling mode, using session-level settings is
+dangerous, as you can't guarantee which connection will receive the setting.
+For this reason, this gem is incompatible with transaction-pooling and should
+only be used if migrations are run on connections that support session-level
+features.
+
 [blog-post]: https://gocardless.com/blog/zero-downtime-postgres-migrations-the-hard-parts/
