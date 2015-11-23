@@ -13,7 +13,7 @@ To explicitly set the lock timeout for a given migration, call the
 
 ```ruby
 class LockTest < ActiveRecord::Migration
-  lock_timeout(250)
+  set_lock_timeout(250)
 
   def change
     create_table :lock_test

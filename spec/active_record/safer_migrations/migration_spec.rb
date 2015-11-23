@@ -2,38 +2,58 @@ require "spec_helper"
 
 RSpec.describe ActiveRecord::SaferMigrations::Migration do
   before { nuke_migrations }
-  before { LockTestHelpers.set_timeout(0) }
+  before { TimeoutTestHelpers.set(:lock_timeout, 0) }
+  before { TimeoutTestHelpers.set(:statement_timeout, 0) }
 
-  describe ".lock_timeout" do
-    before { $test_result = nil }
+  describe "setting timeouts explicitly" do
+    before { $lock_timeout = nil }
+    before { $statement_timeout = nil }
 
     shared_examples_for "running the migration" do
       let(:migration) do
         Class.new(ActiveRecord::Migration) do
           set_lock_timeout(5000)
+          set_statement_timeout(5001)
 
           def change
-            $test_result = LockTestHelpers.get_timeout
+            $lock_timeout = TimeoutTestHelpers.get(:lock_timeout)
+            $statement_timeout = TimeoutTestHelpers.get(:statement_timeout)
           end
         end
       end
 
       it "sets the lock timeout for the duration of the migration" do
         silence_stream($stdout) { run_migration.call }
-        expect($test_result).to eq(5000)
+        expect($lock_timeout).to eq(5000)
       end
 
       it "unsets the lock timeout after the migration" do
         silence_stream($stdout) { run_migration.call }
-        expect(LockTestHelpers.get_timeout).to eq(0)
+        expect(TimeoutTestHelpers.get(:lock_timeout)).to eq(0)
+      end
+
+      it "sets the statement timeout for the duration of the migration" do
+        silence_stream($stdout) { run_migration.call }
+        expect($statement_timeout).to eq(5001)
+      end
+
+      it "unsets the statement timeout after the migration" do
+        silence_stream($stdout) { run_migration.call }
+        expect(TimeoutTestHelpers.get(:statement_timeout)).to eq(0)
       end
 
       context "when the original timeout is not 0" do
-        before { LockTestHelpers.set_timeout(8000) }
+        before { TimeoutTestHelpers.set(:lock_timeout, 8000) }
+        before { TimeoutTestHelpers.set(:statement_timeout, 8001) }
 
         it "unsets the lock timeout after the migration" do
           silence_stream($stdout) { run_migration.call }
-          expect(LockTestHelpers.get_timeout).to eq(8000)
+          expect(TimeoutTestHelpers.get(:lock_timeout)).to eq(8000)
+        end
+
+        it "unsets the statement timeout after the migration" do
+          silence_stream($stdout) { run_migration.call }
+          expect(TimeoutTestHelpers.get(:statement_timeout)).to eq(8001)
         end
       end
     end
@@ -54,36 +74,53 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
   end
 
 
-  describe "the default lock timeout" do
-    before { $test_result = nil }
+  describe "the default timeouts" do
+    before { $lock_timeout = nil }
+    before { $statement_timeout = nil }
     before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
+    before { ActiveRecord::SaferMigrations.default_statement_timeout = 6001 }
     let(:migration) do
       Class.new(ActiveRecord::Migration) do
         def change
-          $test_result = LockTestHelpers.get_timeout
+          $lock_timeout = TimeoutTestHelpers.get(:lock_timeout)
+          $statement_timeout = TimeoutTestHelpers.get(:statement_timeout)
         end
       end
     end
 
     it "sets the lock timeout for the duration of the migration" do
       silence_stream($stdout) { migration.migrate(:up) }
-      expect($test_result).to eq(6000)
+      expect($lock_timeout).to eq(6000)
     end
 
     it "unsets the lock timeout after the migration" do
       silence_stream($stdout) { migration.migrate(:up) }
-      expect(LockTestHelpers.get_timeout).to eq(0)
+      expect(TimeoutTestHelpers.get(:lock_timeout)).to eq(0)
+    end
+
+    it "sets the statement timeout for the duration of the migration" do
+      silence_stream($stdout) { migration.migrate(:up) }
+      expect($statement_timeout).to eq(6001)
+    end
+
+    it "unsets the statement timeout after the migration" do
+      silence_stream($stdout) { migration.migrate(:up) }
+      expect(TimeoutTestHelpers.get(:statement_timeout)).to eq(0)
     end
   end
 
-  describe "when inheriting from a migration with a lock_timeout defined" do
-    before { $test_result = nil }
+  describe "when inheriting from a migration with timeouts defined" do
+    before { $lock_timeout = nil }
+    before { $statement_timeout = nil }
     before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
+    before { ActiveRecord::SaferMigrations.default_statement_timeout = 6001 }
     let(:base_migration) do
       Class.new(ActiveRecord::Migration) do
         set_lock_timeout(7000)
+        set_statement_timeout(7001)
         def change
-          $test_result = LockTestHelpers.get_timeout
+          $lock_timeout = TimeoutTestHelpers.get(:lock_timeout)
+          $statement_timeout = TimeoutTestHelpers.get(:statement_timeout)
         end
       end
     end
@@ -93,7 +130,12 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
 
       it "sets the base class' lock timeout for the duration of the migration" do
         silence_stream($stdout) { migration.migrate(:up) }
-        expect($test_result).to eq(7000)
+        expect($lock_timeout).to eq(7000)
+      end
+
+      it "sets the base class' statement timeout for the duration of the migration" do
+        silence_stream($stdout) { migration.migrate(:up) }
+        expect($statement_timeout).to eq(7001)
       end
     end
 
@@ -101,12 +143,18 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
       let(:migration) do
         Class.new(base_migration) do
           set_lock_timeout(8000)
+          set_statement_timeout(8001)
         end
       end
 
-      it "sets the base class' lock timeout for the duration of the migration" do
+      it "sets the subclass' lock timeout for the duration of the migration" do
         silence_stream($stdout) { migration.migrate(:up) }
-        expect($test_result).to eq(8000)
+        expect($lock_timeout).to eq(8000)
+      end
+
+      it "sets the subclass' statement timeout for the duration of the migration" do
+        silence_stream($stdout) { migration.migrate(:up) }
+        expect($statement_timeout).to eq(8001)
       end
     end
   end
