@@ -1,19 +1,37 @@
 ## ActiveRecord safer migration helpers
 
-Once this gem is loaded, all migrations will have a `lock_timeout` set. The
-default timeout is 1000 ms, but that can be easily changed (e.g. in a Rails
+Postgres holds ACCESS EXCLUSIVE locks for [almost all][pg-alter-table] DDL
+operations. ACCESS EXCLUSIVE locks conflict with all other table-level locks,
+and cause issues in two situations:
+
+1. If the lock is held for a long time, all other access to the table will be
+   blocked, which can result in downtime.
+2. Even if the lock is only held breifly, it will block all other access to the
+   table while it is in the lock queue, as it conflicts with all other locks.
+   The lock can't be acquired until all other queries ahead of it have finished,
+   so having to wait on long-running queries can also result in downtime.
+   See [here][blog-post] for more details.
+
+Both these issues can be avoided by setting timeouts on the migration connection
+- `statement_timeout` and `lock_timeout` respectively.
+
+Once this gem is loaded, all migrations will automatically have a
+`lock_timeout` and a `statement_timeout` set. The default timeout for both
+settings is 1000 ms, but that can be easily changed (e.g. in a Rails
 initializer).
 
 ```ruby
 ActiveRecord::SaferMigrations.default_lock_timeout = 500
+ActiveRecord::SaferMigrations.default_statement_timeout = 2000
 ```
 
-To explicitly set the lock timeout for a given migration, call the
-`lock_timeout` class method in the migration.
+To explicitly set timeouts for a given migration, use the `set_lock_timeout` and
+`set_statement_timeout` class methods in the migration.
 
 ```ruby
 class LockTest < ActiveRecord::Migration
   set_lock_timeout(250)
+  set_statement_timeout(750)
 
   def change
     create_table :lock_test
@@ -21,14 +39,15 @@ class LockTest < ActiveRecord::Migration
 end
 ```
 
-To disable the lock timeout for a migration, call the `disable_lock_timeout!`
-class method. Note that this is [extremely dangerous][blog-post] if you're
-doing any schema alterations in your migration.
+To disable timeouts for a migration, use the `disable_lock_timeout!` and
+`disable_statement_timeout!` class methods. Note that this is [extremely
+dangerous][blog-post] if you're doing any schema alterations in your migration.
 
 ```ruby
 class LockTest < ActiveRecord::Migration
   # Only do this if you really know what you're doing!
   disable_lock_timeout!
+  disable_statement_timeout!
 
   def change
     create_table :lock_test
@@ -46,3 +65,5 @@ only be used if migrations are run on connections that support session-level
 features.
 
 [blog-post]: https://gocardless.com/blog/zero-downtime-postgres-migrations-the-hard-parts/
+[pg-alter-table]: http://www.postgresql.org/docs/9.4/static/sql-altertable.html
+
