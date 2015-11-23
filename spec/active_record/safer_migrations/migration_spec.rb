@@ -10,7 +10,7 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     shared_examples_for "running the migration" do
       let(:migration) do
         Class.new(ActiveRecord::Migration) do
-          lock_timeout(5000)
+          set_lock_timeout(5000)
 
           def change
             $test_result = LockTestHelpers.get_timeout
@@ -73,6 +73,41 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     it "unsets the lock timeout after the migration" do
       silence_stream($stdout) { migration.migrate(:up) }
       expect(LockTestHelpers.get_timeout).to eq(0)
+    end
+  end
+
+  describe "when inheriting from a migration with a lock_timeout defined" do
+    before { $test_result = nil }
+    before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
+    let(:base_migration) do
+      Class.new(ActiveRecord::Migration) do
+        set_lock_timeout(7000)
+        def change
+          $test_result = LockTestHelpers.get_timeout
+        end
+      end
+    end
+
+    context "when the timeout isn't overridden" do
+      let(:migration) { Class.new(base_migration) {} }
+
+      it "sets the base class' lock timeout for the duration of the migration" do
+        silence_stream($stdout) { migration.migrate(:up) }
+        expect($test_result).to eq(7000)
+      end
+    end
+
+    context "when the timeout is overridden" do
+      let(:migration) do
+        Class.new(base_migration) do
+          set_lock_timeout(8000)
+        end
+      end
+
+      it "sets the base class' lock timeout for the duration of the migration" do
+        silence_stream($stdout) { migration.migrate(:up) }
+        expect($test_result).to eq(8000)
+      end
     end
   end
 end
