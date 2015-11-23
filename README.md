@@ -2,7 +2,7 @@
 
 Postgres holds ACCESS EXCLUSIVE locks for [almost all][pg-alter-table] DDL
 operations. ACCESS EXCLUSIVE locks conflict with all other table-level locks,
-and cause issues in two situations:
+which can cause issues in several situations. For instance:
 
 1. If the lock is held for a long time, all other access to the table will be
    blocked, which can result in downtime.
@@ -12,8 +12,8 @@ and cause issues in two situations:
    so having to wait on long-running queries can also result in downtime.
    See [here][blog-post] for more details.
 
-Both these issues can be avoided by setting timeouts on the migration connection
-- `statement_timeout` and `lock_timeout` respectively.
+Both these issues can be avoided by setting timeouts on the migration connection -
+`statement_timeout` and `lock_timeout` respectively.
 
 Once this gem is loaded, all migrations will automatically have a
 `lock_timeout` and a `statement_timeout` set. The default timeout for both
