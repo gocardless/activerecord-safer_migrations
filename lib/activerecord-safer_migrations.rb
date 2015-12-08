@@ -1,6 +1,6 @@
-require 'active_record/connection_adapters/postgresql_adapter'
-require 'active_record/safer_migrations/postgresql_adapter'
-require 'active_record/safer_migrations/migration'
+require "active_record/connection_adapters/postgresql_adapter"
+require "active_record/safer_migrations/postgresql_adapter"
+require "active_record/safer_migrations/migration"
 
 module ActiveRecord
   module SaferMigrations
@@ -35,4 +35,4 @@ module ActiveRecord
   end
 end
 
-require 'active_record/safer_migrations/railtie' if defined?(::Rails)
+require "active_record/safer_migrations/railtie" if defined?(::Rails)

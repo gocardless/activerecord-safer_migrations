@@ -1,0 +1,30 @@
+AllCops:
+  DisplayCopNames: true
+
+# Use trailing rather than leading dots on multi-line call chains
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/Documentation:
+  Enabled: false
+
+Style/StringLiterals:
+  EnforcedStyle: double_quotes
+
+Style/TrailingComma:
+  EnforcedStyleForMultiline: comma
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/GlobalVars:
+  Enabled: false
+
+Style/FileName:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 100
