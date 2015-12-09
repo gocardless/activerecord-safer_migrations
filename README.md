@@ -1,6 +1,6 @@
 ## ActiveRecord safer migration helpers
 
-*Note: this library only supports PostgreSQL. If you're interested in adding support for other databases, we're open to pull requests!*
+*Note: this library only supports PostgreSQL 9.3+. If you're interested in adding support for other databases, we're open to pull requests!*
 
 Postgres holds ACCESS EXCLUSIVE locks for [almost all][pg-alter-table] DDL
 operations. ACCESS EXCLUSIVE locks conflict with all other table-level locks,
