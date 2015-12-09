@@ -16,12 +16,12 @@ Both these issues can be avoided by setting timeouts on the migration connection
 `statement_timeout` and `lock_timeout` respectively.
 
 Once this gem is loaded, all migrations will automatically have a
-`lock_timeout` and a `statement_timeout` set. The default timeout for both
-settings is 1000 ms, but that can be easily changed (e.g. in a Rails
-initializer).
+`lock_timeout` and a `statement_timeout` set. The initial `lock_timeout`
+default is 750ms, and the initial `statement_timeout` default is 1500ms. Both
+defaults can be easily changed (e.g. in a Rails initializer).
 
 ```ruby
-ActiveRecord::SaferMigrations.default_lock_timeout = 500
+ActiveRecord::SaferMigrations.default_lock_timeout = 1000
 ActiveRecord::SaferMigrations.default_statement_timeout = 2000
 ```
 
