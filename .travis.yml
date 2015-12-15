@@ -1,0 +1,16 @@
+language: ruby
+
+rvm:
+  - 2.2
+
+addons:
+  postgresql: "9.3"
+
+before_script:
+  - psql -c 'CREATE DATABASE safer_migrations_test;' -U postgres
+
+script:
+  - bundle exec rspec spec
+
+env:
+  - "DATABASE_URL=postgres://postgres@localhost/safer_migrations_test"
