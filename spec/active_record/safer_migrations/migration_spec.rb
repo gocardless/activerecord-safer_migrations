@@ -73,7 +73,6 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     end
   end
 
-
   describe "the default timeouts" do
     before { $lock_timeout = nil }
     before { $statement_timeout = nil }

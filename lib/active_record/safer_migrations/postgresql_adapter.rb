@@ -20,11 +20,14 @@ module ActiveRecord
       SQL
 
       def set_setting(setting_name, value)
-        execute(fill_sql_values(SET_SETTING_SQL, value: value, setting_name: setting_name))
+        sql = fill_sql_values(SET_SETTING_SQL, value: value, setting_name: setting_name)
+        execute(sql)
       end
 
       def get_setting(setting_name)
-        execute(fill_sql_values(GET_SETTING_SQL, setting_name: setting_name)).first["setting"]
+        sql = fill_sql_values(GET_SETTING_SQL, setting_name: setting_name)
+        result = execute(sql)
+        result.first["setting"]
       end
 
       def fill_sql_values(sql, values)
