@@ -2,6 +2,8 @@ language: ruby
 
 rvm:
   - 2.2
+  - 2.1
+  - 2.0.0
 
 addons:
   postgresql: "9.3"
@@ -14,4 +16,9 @@ script:
   - bundle exec rubocop
 
 env:
-  - "DATABASE_URL=postgres://postgres@localhost/safer_migrations_test"
+  global:
+    - "DATABASE_URL=postgres://postgres@localhost/safer_migrations_test"
+  matrix:
+  - "ACTIVERECORD_VERSION=4.0.13"
+  - "ACTIVERECORD_VERSION=4.1.10"
+  - "ACTIVERECORD_VERSION=4.2.2"
