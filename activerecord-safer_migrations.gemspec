@@ -3,7 +3,6 @@ require File.expand_path("../lib/active_record/safer_migrations/version", __FILE
 Gem::Specification.new do |gem|
   gem.name          = "activerecord-safer_migrations"
   gem.version       = ActiveRecord::SaferMigrations::VERSION
-  gem.date          = "2015-08-10"
   gem.summary       = "ActiveRecord migration helpers to avoid downtime"
   gem.description   = ""
   gem.authors       = ["GoCardless Engineering"]
