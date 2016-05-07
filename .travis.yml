@@ -2,7 +2,7 @@ language: ruby
 
 rvm:
   - 2.3.0
-  - 2.2
+  - 2.2.4
   - 2.1
   - 2.0.0
 
@@ -20,6 +20,14 @@ env:
   global:
     - "DATABASE_URL=postgres://postgres@localhost/safer_migrations_test"
   matrix:
-  - "ACTIVERECORD_VERSION=4.0.13"
-  - "ACTIVERECORD_VERSION=4.1.10"
-  - "ACTIVERECORD_VERSION=4.2.2"
+    - "ACTIVERECORD_VERSION=4.0.13"
+    - "ACTIVERECORD_VERSION=4.1.10"
+    - "ACTIVERECORD_VERSION=4.2.2"
+    - "ACTIVERECORD_VERSION=5.0.0.rc1"
+
+matrix:
+  exclude:
+    - rvm: 2.1
+      env: "ACTIVERECORD_VERSION=5.0.0.rc1"
+    - rvm: 2.0.0
+      env: "ACTIVERECORD_VERSION=5.0.0.rc1"
