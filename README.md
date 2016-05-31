@@ -8,7 +8,7 @@ which can cause issues in several situations. For instance:
 
 1. If the lock is held for a long time, all other access to the table will be
    blocked, which can result in downtime.
-2. Even if the lock is only held breifly, it will block all other access to the
+2. Even if the lock is only held briefly, it will block all other access to the
    table while it is in the lock queue, as it conflicts with all other locks.
    The lock can't be acquired until all other queries ahead of it have finished,
    so having to wait on long-running queries can also result in downtime.
