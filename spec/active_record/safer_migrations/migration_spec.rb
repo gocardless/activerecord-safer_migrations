@@ -1,6 +1,14 @@
 require "spec_helper"
 
 RSpec.describe ActiveRecord::SaferMigrations::Migration do
+  let(:migration_base_class) do
+    if ActiveRecord.version >= Gem::Version.new("5.0")
+      ActiveRecord::Migration[ActiveRecord::Migration.current_version]
+    else
+      ActiveRecord::Migration
+    end
+  end
+
   before { nuke_migrations }
   before { TimeoutTestHelpers.set(:lock_timeout, 0) }
   before { TimeoutTestHelpers.set(:statement_timeout, 0) }
@@ -11,7 +19,7 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
 
     shared_examples_for "running the migration" do
       let(:migration) do
-        Class.new(ActiveRecord::Migration) do
+        Class.new(migration_base_class) do
           set_lock_timeout(5000)
           set_statement_timeout(5001)
 
@@ -79,7 +87,7 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
     before { ActiveRecord::SaferMigrations.default_statement_timeout = 6001 }
     let(:migration) do
-      Class.new(ActiveRecord::Migration) do
+      Class.new(migration_base_class) do
         def change
           $lock_timeout = TimeoutTestHelpers.get(:lock_timeout)
           $statement_timeout = TimeoutTestHelpers.get(:statement_timeout)
@@ -114,7 +122,7 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
     before { ActiveRecord::SaferMigrations.default_statement_timeout = 6001 }
     let(:base_migration) do
-      Class.new(ActiveRecord::Migration) do
+      Class.new(migration_base_class) do
         set_lock_timeout(7000)
         set_statement_timeout(7001)
         def change
