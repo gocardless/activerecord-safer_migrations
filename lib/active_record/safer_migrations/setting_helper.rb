@@ -32,12 +32,10 @@ module ActiveRecord
       end
 
       def set_new_setting
-        puts "-- set_setting(#{@setting_name.inspect}, #{@value})"
         @connection.set_setting(@setting_name, @value)
       end
 
       def reset_setting
-        puts "-- set_setting(#{@setting_name.inspect}, #{@original_value})"
         @connection.set_setting(@setting_name, @original_value)
       end
 
