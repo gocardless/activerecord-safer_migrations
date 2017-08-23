@@ -2,7 +2,7 @@ AllCops:
   DisplayCopNames: true
 
 # Use trailing rather than leading dots on multi-line call chains
-Style/DotPosition:
+Layout/DotPosition:
   EnforcedStyle: trailing
 
 Style/Documentation:
@@ -11,7 +11,7 @@ Style/Documentation:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
 
 Style/AccessorMethodName:
@@ -28,3 +28,7 @@ Style/FileName:
 
 Metrics/LineLength:
   Max: 100
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*_spec.rb"

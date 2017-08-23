@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path("../lib/active_record/safer_migrations/version", __FILE__)
 
 Gem::Specification.new do |gem|
@@ -18,5 +20,5 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "pg", "~> 0.21.0"
   gem.add_development_dependency "rspec", "~> 3.6.0"
-  gem.add_development_dependency "rubocop", "~> 0.35.1"
+  gem.add_development_dependency "rubocop", "~> 0.49.1"
 end

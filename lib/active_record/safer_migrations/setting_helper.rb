@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveRecord
   module SaferMigrations
     class SettingHelper
@@ -42,7 +44,7 @@ module ActiveRecord
       end
 
       def in_transaction?
-        ActiveRecord::Base.connection.open_transactions > 0
+        ActiveRecord::Base.connection.open_transactions.positive?
       end
     end
   end

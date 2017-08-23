@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_record/connection_adapters/postgresql_adapter"
 require "active_record/safer_migrations/postgresql_adapter"
 require "active_record/safer_migrations/migration"

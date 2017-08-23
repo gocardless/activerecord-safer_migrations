@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ActiveRecord
   module SaferMigrations
     class Railtie < Rails::Railtie
