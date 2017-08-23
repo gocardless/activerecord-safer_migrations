@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "active_record/safer_migrations/setting_helper"
 
 module ActiveRecord
@@ -30,7 +32,7 @@ module ActiveRecord
 
       module ClassMethods
         def set_lock_timeout(timeout)
-          if timeout == 0
+          if timeout.zero?
             raise "Setting lock_timeout to 0 is dangerous - it disables the lock " \
                   "timeout rather than instantly timing out. If you *actually* " \
                   "want to disable the lock timeout (not recommended!), use the " \
@@ -45,7 +47,7 @@ module ActiveRecord
         end
 
         def set_statement_timeout(timeout)
-          if timeout == 0
+          if timeout.zero?
             raise "Setting statement_timeout to 0 is dangerous - it disables the statement " \
                   "timeout rather than instantly timing out. If you *actually* " \
                   "want to disable the statement timeout (not recommended!), use the " \

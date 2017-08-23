@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require File.expand_path("../lib/active_record/safer_migrations/version", __FILE__)
 
 Gem::Specification.new do |gem|
