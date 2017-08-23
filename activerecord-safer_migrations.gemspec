@@ -13,4 +13,8 @@ Gem::Specification.new do |gem|
   gem.license       = "MIT"
 
   gem.add_runtime_dependency "activerecord", ">= 4.0"
+
+  gem.add_development_dependency "pg", "~> 0.18.3"
+  gem.add_development_dependency "rspec", "~> 3.3.0"
+  gem.add_development_dependency "rubocop", "~> 0.35.1"
 end
