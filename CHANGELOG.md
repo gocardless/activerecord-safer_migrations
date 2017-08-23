@@ -1,5 +1,6 @@
 # Unreleased
 
+- [#21](https://github.com/gocardless/activerecord-safer_migrations/pull/21) Add support for Ruby 2.4
 - [#23](https://github.com/gocardless/activerecord-safer_migrations/pull/23) Drop support for Rails 4.0 and 4.1
 
 # 1.0.0 / 2016-05-09
