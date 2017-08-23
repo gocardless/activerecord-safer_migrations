@@ -1,5 +1,7 @@
 ## ActiveRecord safer migration helpers
 
+> Looking for Rails 4.0 or Ruby 2.0 support? Please check out the [1.x tree](https://github.com/gocardless/activerecord-safer_migrations/tree/v1.0.0).
+
 *Note: this library only supports PostgreSQL 9.3+. If you're interested in adding support for other databases, we're open to pull requests!*
 
 Postgres holds ACCESS EXCLUSIVE locks for [almost all][pg-alter-table] DDL
