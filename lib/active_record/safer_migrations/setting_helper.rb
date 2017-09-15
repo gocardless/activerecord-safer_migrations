@@ -22,6 +22,7 @@ module ActiveRecord
         set_new_setting
         yield
         reset_setting
+      # rubocop:disable Lint/RescueWithoutErrorClass
       rescue
         reset_setting unless in_transaction?
         raise
