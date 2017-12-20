@@ -1,5 +1,6 @@
 AllCops:
   DisplayCopNames: true
+  TargetRubyVersion: 2.2
 
 # Use trailing rather than leading dots on multi-line call chains
 Layout/DotPosition:
