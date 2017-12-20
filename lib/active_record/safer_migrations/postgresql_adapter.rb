@@ -3,7 +3,7 @@
 module ActiveRecord
   module SaferMigrations
     module PostgreSQLAdapter
-      SET_SETTING_SQL = <<-SQL
+      SET_SETTING_SQL = <<-SQL.freeze
       UPDATE
         pg_settings
       SET
@@ -12,7 +12,7 @@ module ActiveRecord
         name = :setting_name
       SQL
 
-      GET_SETTING_SQL = <<-SQL
+      GET_SETTING_SQL = <<-SQL.freeze
       SELECT
         setting
       FROM
