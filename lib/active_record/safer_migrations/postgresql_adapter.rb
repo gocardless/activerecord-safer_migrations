@@ -3,7 +3,7 @@
 module ActiveRecord
   module SaferMigrations
     module PostgreSQLAdapter
-      SET_SETTING_SQL = <<-SQL
+      SET_SETTING_SQL = <<-SQL.
       UPDATE
         pg_settings
       SET
@@ -11,8 +11,9 @@ module ActiveRecord
       WHERE
         name = :setting_name
       SQL
+        freeze
 
-      GET_SETTING_SQL = <<-SQL
+      GET_SETTING_SQL = <<-SQL.
       SELECT
         setting
       FROM
@@ -20,6 +21,7 @@ module ActiveRecord
       WHERE
         name = :setting_name
       SQL
+        freeze
 
       def set_setting(setting_name, value)
         sql = fill_sql_values(SET_SETTING_SQL, value: value, setting_name: setting_name)
