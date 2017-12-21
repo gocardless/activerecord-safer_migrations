@@ -34,7 +34,9 @@ module ActiveRecord
       end
 
       module ClassMethods
+        # rubocop:disable Naming/AccessorMethodName
         def set_lock_timeout(timeout)
+          # rubocop:enable Naming/AccessorMethodName
           if timeout.zero?
             raise "Setting lock_timeout to 0 is dangerous - it disables the lock " \
                   "timeout rather than instantly timing out. If you *actually* " \
@@ -49,7 +51,9 @@ module ActiveRecord
           self.lock_timeout = 0
         end
 
+        # rubocop:disable Naming/AccessorMethodName
         def set_statement_timeout(timeout)
+          # rubocop:enable Naming/AccessorMethodName
           if timeout.zero?
             raise "Setting statement_timeout to 0 is dangerous - it disables the " \
                   "statement timeout rather than instantly timing out. If you " \
