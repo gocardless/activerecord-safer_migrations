@@ -60,6 +60,19 @@ module ActiveRecord
           say "WARNING: disabling the statement timeout. This is very dangerous."
           self.statement_timeout = 0
         end
+
+        # Delegation of the `say` method didn't work properly with inheritance in Rails 4 so we need
+        # to define the method here. This was fixed in Rails 5 with
+        # https://github.com/rails/rails/commit/f37d92c41036d4eff168b8a8951a8b8a76baa347.
+        if ActiveRecord.version < Gem::Version.new("5.0")
+          def say(message, subitem = false)
+            write "#{subitem ? '   ->' : '--'} #{message}"
+          end
+
+          def write(text = "")
+            puts(text) if verbose
+          end
+        end
       end
     end
   end
