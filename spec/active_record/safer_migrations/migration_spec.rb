@@ -135,7 +135,7 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     end
 
     context "when the timeout isn't overridden" do
-      let(:migration) { Class.new(base_migration){} }
+      let(:migration) { Class.new(base_migration) {} }
 
       it "sets the base class' lock timeout for the duration of the migration" do
         silence_stream($stdout) { migration.migrate(:up) }
