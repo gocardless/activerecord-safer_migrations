@@ -12,10 +12,13 @@ Style/Documentation:
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
 
-Style/AccessorMethodName:
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
+
+Naming/AccessorMethodName:
   Enabled: false
 
 Style/SignalException:
@@ -24,7 +27,7 @@ Style/SignalException:
 Style/GlobalVars:
   Enabled: false
 
-Style/FileName:
+Naming/FileName:
   Enabled: false
 
 Metrics/LineLength:

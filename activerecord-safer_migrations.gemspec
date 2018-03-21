@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path("../lib/active_record/safer_migrations/version", __FILE__)
+require File.expand_path("lib/active_record/safer_migrations/version", __dir__)
 
 Gem::Specification.new do |gem|
   gem.name          = "activerecord-safer_migrations"
@@ -20,5 +20,5 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "pg", "~> 0.21.0"
   gem.add_development_dependency "rspec", "~> 3.7.0"
-  gem.add_development_dependency "rubocop", "~> 0.52.0"
+  gem.add_development_dependency "rubocop", "~> 0.54.0"
 end
