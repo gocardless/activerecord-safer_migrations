@@ -11,13 +11,17 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
     end
   end
 
-  before { nuke_migrations }
-  before { TimeoutTestHelpers.set(:lock_timeout, 0) }
-  before { TimeoutTestHelpers.set(:statement_timeout, 0) }
+  before do
+    nuke_migrations
+    TimeoutTestHelpers.set(:lock_timeout, 0)
+    TimeoutTestHelpers.set(:statement_timeout, 0)
+  end
 
   describe "setting timeouts explicitly" do
-    before { $lock_timeout = nil }
-    before { $statement_timeout = nil }
+    before do
+      $lock_timeout = nil
+      $statement_timeout = nil
+    end
 
     shared_examples_for "running the migration" do
       let(:migration) do
@@ -53,8 +57,10 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
       end
 
       context "when the original timeout is not 0" do
-        before { TimeoutTestHelpers.set(:lock_timeout, 8000) }
-        before { TimeoutTestHelpers.set(:statement_timeout, 8001) }
+        before do
+          TimeoutTestHelpers.set(:lock_timeout, 8000)
+          TimeoutTestHelpers.set(:statement_timeout, 8001)
+        end
 
         it "unsets the lock timeout after the migration" do
           silence_stream($stdout) { run_migration.call }
@@ -84,10 +90,13 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
   end
 
   describe "the default timeouts" do
-    before { $lock_timeout = nil }
-    before { $statement_timeout = nil }
-    before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
-    before { ActiveRecord::SaferMigrations.default_statement_timeout = 6001 }
+    before do
+      $lock_timeout = nil
+      $statement_timeout = nil
+      ActiveRecord::SaferMigrations.default_lock_timeout = 6000
+      ActiveRecord::SaferMigrations.default_statement_timeout = 6001
+    end
+
     let(:migration) do
       Class.new(migration_base_class) do
         def change
@@ -119,10 +128,13 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
   end
 
   describe "when inheriting from a migration with timeouts defined" do
-    before { $lock_timeout = nil }
-    before { $statement_timeout = nil }
-    before { ActiveRecord::SaferMigrations.default_lock_timeout = 6000 }
-    before { ActiveRecord::SaferMigrations.default_statement_timeout = 6001 }
+    before do
+      $lock_timeout = nil
+      $statement_timeout = nil
+      ActiveRecord::SaferMigrations.default_lock_timeout = 6000
+      ActiveRecord::SaferMigrations.default_statement_timeout = 6001
+    end
+
     let(:base_migration) do
       Class.new(migration_base_class) do
         set_lock_timeout(7000)
