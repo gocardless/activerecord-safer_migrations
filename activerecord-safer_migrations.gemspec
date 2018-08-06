@@ -19,6 +19,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "activerecord", ">= 4.0"
 
   gem.add_development_dependency "pg", "~> 0.21.0"
-  gem.add_development_dependency "rspec", "~> 3.7.0"
+  gem.add_development_dependency "rspec", "~> 3.8.0"
   gem.add_development_dependency "rubocop", "~> 0.56.0"
 end
