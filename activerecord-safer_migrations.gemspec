@@ -20,5 +20,5 @@ Gem::Specification.new do |gem|
 
   gem.add_development_dependency "pg", "~> 0.21.0"
   gem.add_development_dependency "rspec", "~> 3.8.0"
-  gem.add_development_dependency "rubocop", "~> 0.57.2"
+  gem.add_development_dependency "rubocop", "~> 0.58.2"
 end
