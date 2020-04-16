@@ -3,15 +3,10 @@
 module ActiveRecord
   module SaferMigrations
     module PostgreSQLAdapter
-      SET_SETTING_SQL = <<-SQL.
-      UPDATE
-        pg_settings
-      SET
-        setting = :value
-      WHERE
-        name = :setting_name
-      SQL
-        freeze
+      # aurora throws an error on updating pg_settings
+      # set_config(setting_name, new_value, is_local) is_local = false applies to the current session, else transaction
+      # https://www.postgresql.org/docs/11/functions-admin.html
+      SET_SETTING_SQL = "select set_config(:setting_name, :value::text, false)".freeze
 
       GET_SETTING_SQL = <<-SQL.
       SELECT
