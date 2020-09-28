@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
 
   gem.required_ruby_version = ">= 2.5"
 
-  gem.add_runtime_dependency "activerecord", ">= 4.0"
+  gem.add_runtime_dependency "activerecord", ">= 5.2"
 
   gem.add_development_dependency "pg", "~> 1.2.3"
   gem.add_development_dependency "rspec", "~> 3.9.0"
