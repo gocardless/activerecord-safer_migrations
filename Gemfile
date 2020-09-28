@@ -5,4 +5,4 @@ source "https://rubygems.org"
 gemspec
 
 gem "activerecord", "~> #{ENV['ACTIVERECORD_VERSION']}" if ENV["ACTIVERECORD_VERSION"]
-gem "gc_ruboconfig", "~> 2.3.5"
+gem "gc_ruboconfig", "~> 2.19.0"
