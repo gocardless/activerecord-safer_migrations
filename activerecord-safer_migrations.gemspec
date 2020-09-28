@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/gocardless/activerecord-safer_migrations"
   gem.license       = "MIT"
 
-  gem.required_ruby_version = "> 2.5"
+  gem.required_ruby_version = ">= 2.5"
 
   gem.add_runtime_dependency "activerecord", ">= 4.0"
 
