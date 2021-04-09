@@ -1,3 +1,7 @@
+# 3.0.0 / 2020-09-28
+
+- [#55](https://github.com/gocardless/activerecord-safer_migrations/pull/55) Drop support for Ruby =< 2.4 and Rails =< 5.1
+
 # 2.0.0 / 2017-08-23
 
 - [#23](https://github.com/gocardless/activerecord-safer_migrations/pull/23) Drop support for Rails 4.0 and 4.1

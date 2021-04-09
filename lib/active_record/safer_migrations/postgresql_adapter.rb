@@ -8,7 +8,7 @@ module ActiveRecord
       # https://www.postgresql.org/docs/11/functions-admin.html
       SET_SETTING_SQL = "select set_config(:setting_name, :value::text, false)".freeze
 
-      GET_SETTING_SQL = <<-SQL.
+      GET_SETTING_SQL = <<-SQL
       SELECT
         setting
       FROM
@@ -16,7 +16,6 @@ module ActiveRecord
       WHERE
         name = :setting_name
       SQL
-        freeze
 
       def set_setting(setting_name, value)
         sql = fill_sql_values(SET_SETTING_SQL, value: value, setting_name: setting_name)
