@@ -1,10 +1,16 @@
-inherit_from: .rubocop_todo.yml
-
 inherit_gem:
   gc_ruboconfig: rubocop.yml
 
 AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: 3.2
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
+
+Naming/FileName:
+  Exclude:
+    - lib/activerecord-safer_migrations.rb
+
+Style/GlobalVars:
+  Exclude:
+    - "spec/active_record/safer_migrations/migration_spec.rb"
