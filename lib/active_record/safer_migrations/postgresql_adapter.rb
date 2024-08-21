@@ -33,7 +33,11 @@ module ActiveRecord
       end
 
       def fill_sql_values(sql, values)
-        ActiveRecord::Base.send(:replace_named_bind_variables, sql, values)
+        if Rails.version >= '7.2.0'
+          ActiveRecord::Base.send(:replace_named_bind_variables, self, sql, values)
+        else
+          ActiveRecord::Base.send(:replace_named_bind_variables, sql, values)
+        end
       end
     end
   end
