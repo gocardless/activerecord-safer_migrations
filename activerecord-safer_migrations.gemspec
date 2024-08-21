@@ -14,11 +14,8 @@ Gem::Specification.new do |gem|
   gem.homepage      = "https://github.com/gocardless/activerecord-safer_migrations"
   gem.license       = "MIT"
 
-  gem.required_ruby_version = ">= 2.5"
+  gem.required_ruby_version = ">= 3.1"
 
-  gem.add_runtime_dependency "activerecord", ">= 5.2"
-
-  gem.add_development_dependency "pg", "~> 1.2.3"
-  gem.add_development_dependency "rspec", "~> 3.9.0"
-  gem.add_development_dependency "rubocop", "~> 0.92.0"
+  gem.add_dependency "activerecord", ">= 7.0"
+  gem.metadata["rubygems_mfa_required"] = "true"
 end

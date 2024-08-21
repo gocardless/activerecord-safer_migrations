@@ -37,4 +37,4 @@ module ActiveRecord
   end
 end
 
-require "active_record/safer_migrations/railtie" if defined?(::Rails)
+require "active_record/safer_migrations/railtie" if defined?(Rails)
