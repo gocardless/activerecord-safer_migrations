@@ -24,11 +24,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        ruby-version: ["3.1", "3.2", "3.3"]
-        activerecord-version:
-          - "7.0.8"
-          - "7.1.3.4"
-          - "7.2.0"
+        ruby-version: ["2.7", "3.0", "3.4", "3.4"]
+        rails-version: ["7.0.8", "7.1.3.4", "7.2.0", "7.2.0"]
+        activerecord-version: ["7.0.8", "7.1.3.4", "7.2.0", "7.2.0"]
     runs-on: ubuntu-latest
     services:
       postgres:
@@ -48,6 +46,7 @@ jobs:
       DATABASE_URL: postgres://postgres:safer_migrations@localhost/safer_migrations_test
       DATABASE_DEPENDENCY_PORT: "5432"
       ACTIVERECORD_VERSION: "${{ matrix.activerecord-version }}"
+      RAILS_VERSION: "${{ matrix.rails-version }}"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Ruby

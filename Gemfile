@@ -4,6 +4,7 @@ source "https://rubygems.org"
 
 gemspec
 
+gem "rails", "~> #{ENV['RAILS_VERSION']}" if ENV["RAILS_VERSION"]
 gem "activerecord", "~> #{ENV['ACTIVERECORD_VERSION']}" if ENV["ACTIVERECORD_VERSION"]
 
 group :test, :development do
