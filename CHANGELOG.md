@@ -1,6 +1,6 @@
-# 4.0.0 / 2023-09-19
+# 4.0.0 / 2024-08-21
 
-- Remove support for Ruby =< 2.7
+- Remove support for Ruby =< 3.0 and Rails =< 6.0
 
 # 3.0.0 / 2020-09-28
 
