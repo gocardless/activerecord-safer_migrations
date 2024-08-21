@@ -1,6 +1,7 @@
 # 4.0.0 / 2024-08-21
 
-- Remove support for Ruby =< 3.0 and Rails =< 6.0
+- Remove support for Ruby =< 3.0 and Rails < 7.0
+- Add support for ActiveRecord 7.2 (#98)
 
 # 3.0.0 / 2020-09-28
 
