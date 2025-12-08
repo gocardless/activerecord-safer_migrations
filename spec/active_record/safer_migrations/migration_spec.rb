@@ -79,13 +79,13 @@ RSpec.describe ActiveRecord::SaferMigrations::Migration do
         -> { ActiveRecord::Base.transaction { migration.migrate(:up) } }
       end
 
-      include_examples "running the migration"
+      it_behaves_like "running the migration"
     end
 
     context "when running without transactional DDL" do
       let(:run_migration) { -> { migration.migrate(:up) } }
 
-      include_examples "running the migration"
+      it_behaves_like "running the migration"
     end
   end
 
