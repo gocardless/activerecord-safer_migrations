@@ -1,3 +1,8 @@
+# 5.0.0 / 2025-12-08
+
+- Drop support for Ruby =< 3.2 and Rails < 7.2
+- Add support for ActiveRecord 8.1, Ruby 3.4 and Ruby 4.0
+
 # 4.0.0 / 2024-08-21
 
 - Remove support for Ruby =< 3.0 and Rails < 7.0
