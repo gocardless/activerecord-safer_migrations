@@ -7,7 +7,7 @@ gemspec
 gem "activerecord", "~> #{ENV['ACTIVERECORD_VERSION']}" if ENV["ACTIVERECORD_VERSION"]
 
 group :test, :development do
-  gem "gc_ruboconfig", "~> 5.0"
+  gem "gc_ruboconfig", "~> 6.0"
   gem "pg", "~> 1.4"
   gem "rspec", "~> 3.13.0"
 end
